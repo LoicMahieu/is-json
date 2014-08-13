@@ -3,7 +3,7 @@ var isJSON = require('../');
 
 
 test('performe isJSON verifications', function (t) {
-  t.plan(16);
+  t.plan(20);
 
   t.deepEqual(isJSON(null), false, '`null`, should return false');
   t.deepEqual(isJSON(false), false, '`false`, should return false');
@@ -18,6 +18,10 @@ test('performe isJSON verifications', function (t) {
   t.deepEqual(isJSON('{"a":"obja","b":[0,1,2],"c":{"d":"some object"}}'), true,
               '`{"a":"obja","b":[0,1,2],"c":{"d":"some object"}}`, should return true');
   t.deepEqual(isJSON('1,2,3'), false, '`1,2,3`, should return false');
+  t.deepEqual(isJSON('[1,2,3'), false, '`[1,2,3`, should return false');
+  t.deepEqual(isJSON('[1],2,3'), false, '`[1],2,3`, should return false');
+  t.deepEqual(isJSON('[1,2,]'), false, '`[1,2,]`, should return false');
+  t.deepEqual(isJSON('[1,2,3]'), true, '`[1,2,3]`, should return true');
   t.deepEqual(isJSON('{1,2,3}'), false, '`{1,2,3}`, should return false');
   t.deepEqual(isJSON('[{"a": 123}, {1,2,3}}]'), false, '`[{"a": 123, {1,2,3}}]`, should return false');
   var cobj = '[{"a": {"aa": [1,2,3,4], "aaa": {"d": 1212}}}, {"b": "test", "c": [1,2,3], "date": "' + new Date() + '}]';
